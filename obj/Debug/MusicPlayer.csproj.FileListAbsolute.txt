@@ -1,0 +1,9 @@
+D:\Uni\Semestru2\IP\MusicPlayer\bin\Debug\MusicPlayer.exe.config
+D:\Uni\Semestru2\IP\MusicPlayer\bin\Debug\MusicPlayer.exe
+D:\Uni\Semestru2\IP\MusicPlayer\bin\Debug\MusicPlayer.pdb
+D:\Uni\Semestru2\IP\MusicPlayer\obj\Debug\MusicPlayer.csproj.AssemblyReference.cache
+D:\Uni\Semestru2\IP\MusicPlayer\obj\Debug\MusicPlayer.Properties.Resources.resources
+D:\Uni\Semestru2\IP\MusicPlayer\obj\Debug\MusicPlayer.csproj.GenerateResource.cache
+D:\Uni\Semestru2\IP\MusicPlayer\obj\Debug\MusicPlayer.csproj.CoreCompileInputs.cache
+D:\Uni\Semestru2\IP\MusicPlayer\obj\Debug\MusicPlayer.exe
+D:\Uni\Semestru2\IP\MusicPlayer\obj\Debug\MusicPlayer.pdb
