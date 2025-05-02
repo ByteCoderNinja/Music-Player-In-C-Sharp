@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MusicPlayer.Properties
+namespace mpv_test1.Properties
 {
 
 

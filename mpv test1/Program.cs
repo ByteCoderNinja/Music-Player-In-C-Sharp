@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MusicPlayer
+namespace mpv_test1
 {
     internal static class Program
     {
