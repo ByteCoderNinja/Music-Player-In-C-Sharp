@@ -1,4 +1,9 @@
-﻿using System;
+﻿// File: Mpv.cs (din ClassLibrary1)
+// Functionalitate: Wrapper peste apeluri native MPV
+// Testare: Testare integrată indirect prin controller
+// Sablon: Wrapper
+
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.SqlServer.Server;
@@ -52,13 +57,17 @@ namespace MpvAPI
         public void Pause()
         {
             if (Handle == IntPtr.Zero)
+            {
                 return;
+            }
             SetPropertyString("pause", "yes");
         }
         public void Resume()
         {
             if (Handle == IntPtr.Zero)
+            {
                 return;
+            }
             SetPropertyString("pause", "no");
         }
         public void Initialize()
@@ -76,7 +85,9 @@ namespace MpvAPI
                 Function.TerminateDestroy(Handle);
             Handle = Function.Create();
             if (Handle == IntPtr.Zero)
+            {
                 return;
+            }
             Function.Initialize(Handle);
             SetPropertyString("keep-open", "yes");
             var windowId = windowHandle.ToInt64();
@@ -162,10 +173,24 @@ namespace MpvAPI
             {
                 Function.TerminateDestroy(Handle);
                 if (disposing && Function is IDisposable disposableFunctions)
+                {
                     disposableFunctions.Dispose();
+                }
                 disposed = true;
             }
         }
+
+        public void SetSpeed(float speed)
+        {
+            if (Handle == IntPtr.Zero)
+            {
+                return;
+            }
+            string speedStr = speed.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            MpvFunction.mpv_set_property_string(Handle, "speed", speedStr);
+        }
+
+
         ~Mpv()
         {
             Dispose(false);

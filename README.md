@@ -1,3 +1,1 @@
-#Simple music player in C# based on MPV
-Project for Software Engineering
-[TODO]
+# Music Player Written in C#, using the MPV library in the backend to manage media

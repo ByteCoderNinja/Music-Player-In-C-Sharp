@@ -1,144 +1,109 @@
-﻿namespace mpv_test1
+﻿namespace MpvPlayerUI
 {
     partial class Form1
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Button btnPrevious;
+        private System.Windows.Forms.ComboBox comboSpeed;
+        private System.Windows.Forms.Button btnAddSong;
+        private System.Windows.Forms.ListBox listBoxSongs;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.playVideoButton = new System.Windows.Forms.Button();
-            this.filePathTextBox = new System.Windows.Forms.TextBox();
-            this.pauseResumeButon = new System.Windows.Forms.Button();
-            this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnPause = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
+            this.btnPrevious = new System.Windows.Forms.Button();
+            this.comboSpeed = new System.Windows.Forms.ComboBox();
+            this.btnAddSong = new System.Windows.Forms.Button();
+            this.listBoxSongs = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(799, 362);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "MKV files (*.mkv)|*.mkv|MP4 files (*.mp4)|*.mp4|MP3 files(*.mp3)|*.mp3|FLAC files" +
-    "(*.flac)|*.flac|All files (*.*)|*.*";
-            // 
-            // playVideoButton
-            // 
-            this.playVideoButton.Location = new System.Drawing.Point(349, 417);
-            this.playVideoButton.Name = "playVideoButton";
-            this.playVideoButton.Size = new System.Drawing.Size(75, 23);
-            this.playVideoButton.TabIndex = 2;
-            this.playVideoButton.Text = "Start";
-            this.playVideoButton.UseVisualStyleBackColor = true;
-            this.playVideoButton.Click += new System.EventHandler(this.playVideoButton_Click);
-            // 
-            // filePathTextBox
-            // 
-            this.filePathTextBox.Location = new System.Drawing.Point(453, 415);
-            this.filePathTextBox.Name = "filePathTextBox";
-            this.filePathTextBox.ReadOnly = true;
-            this.filePathTextBox.Size = new System.Drawing.Size(302, 20);
-            this.filePathTextBox.TabIndex = 3;
-            this.filePathTextBox.Text = "Filepath";
-            // 
-            // pauseResumeButon
-            // 
-            this.pauseResumeButon.Location = new System.Drawing.Point(268, 417);
-            this.pauseResumeButon.Name = "pauseResumeButon";
-            this.pauseResumeButon.Size = new System.Drawing.Size(75, 23);
-            this.pauseResumeButon.TabIndex = 4;
-            this.pauseResumeButon.Text = "Play";
-            this.pauseResumeButon.UseVisualStyleBackColor = true;
-            this.pauseResumeButon.Click += new System.EventHandler(this.pauseResumeButon_Click);
-            // 
+
+            // panel1
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(640, 100);
+            this.panel1.TabIndex = 0;
+
+            // listBoxSongs
+            this.listBoxSongs.FormattingEnabled = true;
+            this.listBoxSongs.ItemHeight = 15;
+            this.listBoxSongs.Location = new System.Drawing.Point(12, 120);
+            this.listBoxSongs.Name = "listBoxSongs";
+            this.listBoxSongs.Size = new System.Drawing.Size(640, 154);
+            this.listBoxSongs.TabIndex = 6;
+            this.listBoxSongs.SelectedIndexChanged += new System.EventHandler(this.listBoxSongs_SelectedIndexChanged);
+
+            // btnPause
+            this.btnPause.Location = new System.Drawing.Point(12, 290);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(90, 30);
+            this.btnPause.Text = "Pause";
+            this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+
+            // btnPrevious
+            this.btnPrevious.Location = new System.Drawing.Point(110, 290);
+            this.btnPrevious.Name = "btnPrevious";
+            this.btnPrevious.Size = new System.Drawing.Size(90, 30);
+            this.btnPrevious.Text = "Previous";
+            this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
+
+            // btnNext
+            this.btnNext.Location = new System.Drawing.Point(210, 290);
+            this.btnNext.Name = "btnNext";
+            this.btnNext.Size = new System.Drawing.Size(90, 30);
+            this.btnNext.Text = "Next";
+            this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+
+            // comboSpeed
+            this.comboSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboSpeed.FormattingEnabled = true;
+            this.comboSpeed.Items.AddRange(new object[] {
+            "0.5x",
+            "1.0x",
+            "1.5x",
+            "2.0x"});
+            this.comboSpeed.Location = new System.Drawing.Point(320, 294);
+            this.comboSpeed.Name = "comboSpeed";
+            this.comboSpeed.Size = new System.Drawing.Size(90, 23);
+            this.comboSpeed.TabIndex = 4;
+            this.comboSpeed.SelectedIndexChanged += new System.EventHandler(this.comboSpeed_SelectedIndexChanged);
+            this.comboSpeed.SelectedIndex = 1; // Default to 1.0x
+
+            // btnAddSong
+            this.btnAddSong.Location = new System.Drawing.Point(430, 290);
+            this.btnAddSong.Name = "btnAddSong";
+            this.btnAddSong.Size = new System.Drawing.Size(90, 30);
+            this.btnAddSong.Text = "Add Song";
+            this.btnAddSong.UseVisualStyleBackColor = true;
+            this.btnAddSong.Click += new System.EventHandler(this.btnAddSong_Click);
+
             // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.pauseResumeButon);
-            this.Controls.Add(this.filePathTextBox);
-            this.Controls.Add(this.playVideoButton);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.ClientSize = new System.Drawing.Size(670, 340);
+            this.Controls.Add(this.btnAddSong);
+            this.Controls.Add(this.comboSpeed);
+            this.Controls.Add(this.btnNext);
+            this.Controls.Add(this.btnPrevious);
+            this.Controls.Add(this.btnPause);
+            this.Controls.Add(this.listBoxSongs);
+            this.Controls.Add(this.panel1);
             this.Name = "Form1";
-            this.Text = "Form1";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Text = "Mpv Music Player";
             this.ResumeLayout(false);
-            this.PerformLayout();
-
         }
-
-        #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button playVideoButton;
-        private System.Windows.Forms.TextBox filePathTextBox;
-        private System.Windows.Forms.Button pauseResumeButon;
     }
 }
-

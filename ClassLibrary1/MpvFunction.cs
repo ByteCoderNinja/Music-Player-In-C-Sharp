@@ -68,5 +68,9 @@ namespace MpvAPI
                 disposed = true;
             }
         }
+
+        [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int mpv_set_property_string(IntPtr ctx, string name, string data);
+
     }
 }
