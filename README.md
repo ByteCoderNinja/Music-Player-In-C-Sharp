@@ -1,1 +1,1 @@
-# mpv test1
+# Music Player Written in C#, using the MPV library in the backend to manage media
