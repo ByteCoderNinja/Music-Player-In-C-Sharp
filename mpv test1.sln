@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv test1", "mpv test1\mpv test1.csproj", "{626749F7-B3C4-4957-9FED-D9CB22A67817}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MpvAPI", "ClassLibrary1\MpvAPI.csproj", "{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{626749F7-B3C4-4957-9FED-D9CB22A67817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{626749F7-B3C4-4957-9FED-D9CB22A67817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{626749F7-B3C4-4957-9FED-D9CB22A67817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{626749F7-B3C4-4957-9FED-D9CB22A67817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53F76498-80F0-4CA8-8B45-06084766F3DF}
+	EndGlobalSection
+EndGlobal
