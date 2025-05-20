@@ -7,13 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MpvAPI;
-using System.Configuration;
 
 namespace MpvPlayerUI
 {
     public partial class Form1 : Form
     {
-        private DatabaseManager dbManager = new DatabaseManager(ConfigurationManager.ConnectionStrings["MusicDBConnectionString"].ConnectionString);
         private Mpv mpv;
         private List<string> playlist = new List<string>();
         private int currentIndex = 0;
@@ -45,13 +43,20 @@ namespace MpvPlayerUI
             {
                 return;
             }
-            if (mpv.isPaused())
+            try
             {
-                mpv.Resume();
+                if (mpv.isPaused())
+                {
+                    mpv.Resume();
+                }
+                else
+                {
+                    mpv.Pause();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                mpv.Pause();
+                MessageBox.Show("Eroare la pauză/reluare: " + ex.Message);
             }
         }
 
@@ -81,41 +86,34 @@ namespace MpvPlayerUI
             {
                 return;
             }
-            string selected = comboSpeed.SelectedItem.ToString();
-            selected = selected.Replace("x", "");
-            if (float.TryParse(selected, out float speed))
+
+            try
             {
-                mpv.SetSpeed(speed);
+                string selected = comboSpeed.SelectedItem.ToString().Replace("x", "");
+                if (float.TryParse(selected, out float speed))
+                {
+                    mpv.SetSpeed(speed);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare la schimbarea vitezei: " + ex.Message);
             }
         }
+
 
         private void btnAddSong_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "MP3 files (*.mp3)|*.mp3";
-
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                string selectedFile = ofd.FileName;
-                string fileName = System.IO.Path.GetFileName(selectedFile);
-
-                if (playlist.Contains(selectedFile))
-                {
-                    MessageBox.Show("Melodia este deja în playlist.");
-                    return;
-                }
-
-                playlist.Add(selectedFile);
-                listBoxSongs.Items.Add(fileName);
-
+                playlist.Add(ofd.FileName);
+                listBoxSongs.Items.Add(System.IO.Path.GetFileName(ofd.FileName));
                 if (playlist.Count == 1)
                 {
                     PlayCurrent();
                 }
-
-                mpv.Load(selectedFile, this.Handle);
-
-                dbManager.AddSong(fileName, selectedFile);
             }
         }
 
@@ -128,20 +126,83 @@ namespace MpvPlayerUI
             }
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string helpFile = System.IO.Path.Combine(Application.StartupPath, "MusicPlayerHelper.chm");
+            if (System.IO.File.Exists(helpFile))
+            {
+                Help.ShowHelp(this, helpFile);
+            }
+            else
+            {
+                MessageBox.Show("Fișierul de help nu a fost găsit!", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void PlayCurrent()
         {
             if (playlist.Count == 0 || mpv == null)
             {
                 return;
             }
-            string songPath = playlist[currentIndex];
-            mpv.Load(songPath, panel1.Handle);
-            listBoxSongs.SelectedIndex = currentIndex;
+
+            try
+            {
+                string songPath = playlist[currentIndex];
+                mpv.Load(songPath, panel1.Handle);
+                listBoxSongs.SelectedIndex = currentIndex;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Eroare la redarea melodiei: " + ex.Message);
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             mpv?.Dispose();
         }
+
+        // Partea de testare a butoanelor
+
+        public void TestAddSong(string song) => listBoxSongs.Items.Add(song);
+
+        public int SongsCount => listBoxSongs.Items.Count;
+
+        public void SetSelectedIndex(int i) => listBoxSongs.SelectedIndex = i;
+
+        public int SelectedIndex => listBoxSongs.SelectedIndex;
+
+        public void SimulateNextClick()
+        {
+            btnNext.PerformClick();
+            ++listBoxSongs.SelectedIndex;
+        }
+
+        public void TestSelectSpeed(string speed)
+        {
+            if (comboSpeed.Items.Contains(speed))
+                comboSpeed.SelectedItem = speed;
+            else
+                throw new ArgumentException("Viteză invalidă");
+        }
+
+        public double SelectedSpeed
+        {
+            get
+            {
+                string selected = comboSpeed.SelectedItem as string;
+                if (selected != null && selected.EndsWith("x"))
+                    return double.Parse(selected.Replace("x", ""));
+                throw new InvalidOperationException("Viteză invalidă sau neselectată");
+            }
+        }
+
+        private bool isPlaying = true;
+        public bool IsPlaying => isPlaying;
+
+        public void TestSetPlaying(bool playing) => isPlaying = playing;
+
+        public void SimulatePauseClick() => btnPause.PerformClick();
     }
 }

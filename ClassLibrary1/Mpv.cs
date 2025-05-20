@@ -44,68 +44,109 @@ namespace MpvAPI
 
         public bool isPaused()
         {
-            if (Handle == IntPtr.Zero) return true;
-            var lpBuffer = IntPtr.Zero;
-            //lpBuffer = GetPropertyString("pause");
-            //_mpvGetPropertyString(_mpvHandle, GetUtf8Bytes("pause"), MpvFormatString, ref lpBuffer);
-            Function.GetPropertystring(Handle, GetUtf8Bytes("pause"), 1, ref lpBuffer);
-            var isPaused = Marshal.PtrToStringAnsi(lpBuffer) == "yes";
-            Function.Free(lpBuffer);
-            return isPaused;
-
+            try
+            {
+                if (Handle == IntPtr.Zero) return true;
+                var lpBuffer = IntPtr.Zero;
+                Function.GetPropertystring(Handle, GetUtf8Bytes("pause"), 1, ref lpBuffer);
+                var isPaused = Marshal.PtrToStringAnsi(lpBuffer) == "yes";
+                Function.Free(lpBuffer);
+                return isPaused;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Nu s-a putut obține starea de pauză.", ex);
+            }
         }
+
         public void Pause()
         {
-            if (Handle == IntPtr.Zero)
+            try
             {
-                return;
+                if (Handle == IntPtr.Zero) return;
+                SetPropertyString("pause", "yes");
             }
-            SetPropertyString("pause", "yes");
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Nu s-a putut pune pauză.", ex);
+            }
         }
+
         public void Resume()
         {
-            if (Handle == IntPtr.Zero)
+            try
             {
-                return;
+                if (Handle == IntPtr.Zero) return;
+                SetPropertyString("pause", "no");
             }
-            SetPropertyString("pause", "no");
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Nu s-a putut relua redarea.", ex);
+            }
         }
+
         public void Initialize()
         {
-            Handle = Function.Create();
-            if (Handle == IntPtr.Zero)
-                throw new Exception("Failed create mpv context.");
-            if (Function.Initialize(Handle) != 0)
-                throw new Exception("Failed initialize functions");
+            try
+            {
+                Handle = Function.Create();
+                if (Handle == IntPtr.Zero)
+                    throw new Exception("Eșec la creare context MPV.");
+                if (Function.Initialize(Handle) != 0)
+                    throw new Exception("Eșec la inițializarea funcțiilor MPV.");
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Eroare la inițializare MPV.", ex);
+            }
         }
 
         public void Load(string path, IntPtr windowHandle)
         {
-            if (Handle != IntPtr.Zero)
-                Function.TerminateDestroy(Handle);
-            Handle = Function.Create();
-            if (Handle == IntPtr.Zero)
+            try
             {
-                return;
+                if (Handle != IntPtr.Zero)
+                    Function.TerminateDestroy(Handle);
+                Handle = Function.Create();
+                if (Handle == IntPtr.Zero) return;
+                Function.Initialize(Handle);
+                SetPropertyString("keep-open", "yes");
+                var windowId = windowHandle.ToInt64();
+                Function.SetOption(Handle, GetUtf8Bytes("wid"), 4, ref windowId);
+                Command("loadfile", path);
             }
-            Function.Initialize(Handle);
-            SetPropertyString("keep-open", "yes");
-            var windowId = windowHandle.ToInt64();
-            Function.SetOption(Handle, GetUtf8Bytes("wid"), 4, ref windowId);
-            Command("loadfile", path);
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Nu s-a putut încărca fișierul media.", ex);
+            }
         }
 
         public void Command(params string[] args)
         {
-            IntPtr[] byteArrayPointers;
-            var mainPtr = AllocateUtf8IntPtrArrayWithSentinel(args, out byteArrayPointers);
-            Function.Command(Handle, mainPtr);
-            foreach (var ptr in byteArrayPointers)
+            IntPtr[] byteArrayPointers = null;
+            IntPtr mainPtr = IntPtr.Zero;
+
+            try
             {
-                Marshal.FreeHGlobal(ptr);
+                mainPtr = AllocateUtf8IntPtrArrayWithSentinel(args, out byteArrayPointers);
+                Function.Command(Handle, mainPtr);
             }
-            Marshal.FreeHGlobal(mainPtr);
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Eroare la trimiterea comenzii către MPV.", ex);
+            }
+            finally
+            {
+                if (byteArrayPointers != null)
+                {
+                    foreach (var ptr in byteArrayPointers)
+                        Marshal.FreeHGlobal(ptr);
+                }
+                if (mainPtr != IntPtr.Zero)
+                    Marshal.FreeHGlobal(mainPtr);
+            }
         }
+
         public void SetProperty(string name, byte[] data, int format = 9)
         {
             if (data.Length >= 1)
