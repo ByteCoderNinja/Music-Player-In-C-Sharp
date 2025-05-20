@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv test1", "mpv test1\mpv 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MpvAPI", "ClassLibrary1\MpvAPI.csproj", "{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPlayerTester", "MusicPlayerTester\MusicPlayerTester.csproj", "{A780A859-3E8B-489C-B4AC-4188654A3B25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A780A859-3E8B-489C-B4AC-4188654A3B25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A780A859-3E8B-489C-B4AC-4188654A3B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A780A859-3E8B-489C-B4AC-4188654A3B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A780A859-3E8B-489C-B4AC-4188654A3B25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
