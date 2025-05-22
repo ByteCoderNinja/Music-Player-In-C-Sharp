@@ -112,17 +112,12 @@ namespace MpvPlayerUI
                 int i;
                 for (i = 0; i < ofd.FileNames.Length; i++)
                 {
-                    if (playlist.Contains(ofd.FileName))
+                    if (playlist.Contains(ofd.FileNames[i]))
                     {
-                        MessageBox.Show("Nu se poate incarca acelasi fisier de 2 ori!");
-                        return;
+                        continue;
                     }
                     playlist.Add(ofd.FileNames[i]);
                     listBoxSongs.Items.Add(System.IO.Path.GetFileName(ofd.FileNames[i]));
-                }
-                if (playlist.Count > 0)
-                {
-                    PlayCurrent();
                 }
             }
         }
