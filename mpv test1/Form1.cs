@@ -5,6 +5,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Data.SqlTypes;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using MpvAPI;
 
@@ -14,6 +18,7 @@ namespace MpvPlayerUI
     {
         private MpvFacade mpv;
         private List<string> playlist = new List<string>();
+        private ISourceStrategy musicSource = new LocalMusicStrategy("..\\..\\..\\local");
         private int currentIndex = 0;
 
         public Form1()
@@ -21,6 +26,12 @@ namespace MpvPlayerUI
             InitializeComponent();
             this.Load += Form1_Load;
             this.FormClosing += Form1_FormClosing;
+
+            foreach (var song in musicSource.LoadMusic())
+            {
+                addMusic(song);
+            }
+            ;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -35,6 +46,12 @@ namespace MpvPlayerUI
             {
                 MessageBox.Show("Eroare la încărcarea melodiei: " + ex.Message);
             }
+        }
+
+        private void addMusic(string music)
+        {
+            playlist.Add(music);
+            listBoxSongs.Items.Add(System.IO.Path.GetFileName(music));
         }
 
         private void btnPause_Click(object sender, EventArgs e)
@@ -106,7 +123,7 @@ namespace MpvPlayerUI
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            ofd.Filter = "MP3 files (*.mp3)|*.mp3";
+            ofd.Filter = "Fișiere audio (*.mp3;*.wav;*.flac)|*.mp3;*.wav;*.flac";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 int i;
