@@ -81,6 +81,7 @@
             this.comboSpeed.Name = "comboSpeed";
             this.comboSpeed.Size = new System.Drawing.Size(90, 21);
             this.comboSpeed.TabIndex = 4;
+            this.comboSpeed.SelectedIndex = 1;
             this.comboSpeed.SelectedIndexChanged += new System.EventHandler(this.comboSpeed_SelectedIndexChanged);
             // 
             // btnAddSong

@@ -105,12 +105,17 @@ namespace MpvPlayerUI
         private void btnAddSong_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
             ofd.Filter = "MP3 files (*.mp3)|*.mp3";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                playlist.Add(ofd.FileName);
-                listBoxSongs.Items.Add(System.IO.Path.GetFileName(ofd.FileName));
-                if (playlist.Count == 1)
+                int i;
+                for (i = 0; i < ofd.FileNames.Length; i++)
+                {
+                    playlist.Add(ofd.FileNames[i]);
+                    listBoxSongs.Items.Add(System.IO.Path.GetFileName(ofd.FileNames[i]));
+                }
+                if (playlist.Count > 0)
                 {
                     PlayCurrent();
                 }
