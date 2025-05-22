@@ -108,6 +108,11 @@ namespace MpvPlayerUI
             ofd.Filter = "MP3 files (*.mp3)|*.mp3";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
+                if (playlist.Contains(ofd.FileName))
+                {
+                    MessageBox.Show("Nu se poate incarca acelasi fisier de 2 ori!");
+                    return;
+                }
                 playlist.Add(ofd.FileName);
                 listBoxSongs.Items.Add(System.IO.Path.GetFileName(ofd.FileName));
                 if (playlist.Count == 1)
