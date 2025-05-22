@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mpv test1", "mpv test1\mpv test1.csproj", "{626749F7-B3C4-4957-9FED-D9CB22A67817}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPlayer", "mpv test1\MusicPlayer.csproj", "{626749F7-B3C4-4957-9FED-D9CB22A67817}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MpvAPI", "ClassLibrary1\MpvAPI.csproj", "{3B4E30F8-D0AD-419B-A009-EE3EC9D63629}"
 EndProject

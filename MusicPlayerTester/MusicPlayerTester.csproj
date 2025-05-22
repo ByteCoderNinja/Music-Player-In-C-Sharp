@@ -61,9 +61,9 @@
       <Project>{3b4e30f8-d0ad-419b-a009-ee3ec9d63629}</Project>
       <Name>MpvAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\mpv test1\mpv test1.csproj">
+    <ProjectReference Include="..\mpv test1\MusicPlayer.csproj">
       <Project>{626749f7-b3c4-4957-9fed-d9cb22a67817}</Project>
-      <Name>mpv test1</Name>
+      <Name>MusicPlayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
