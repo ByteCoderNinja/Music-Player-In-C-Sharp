@@ -8,7 +8,7 @@ namespace MpvAPI.Interfaces
 {
     internal interface IPlayer
     {
-         Mpv mpvAPI { get; }
+         MpvFacade mpvAPI { get; }
         string libPath { get; }
         string screenshotPath {  get; }
         bool playing {  get; }

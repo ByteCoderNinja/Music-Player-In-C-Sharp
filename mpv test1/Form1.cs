@@ -12,7 +12,7 @@ namespace MpvPlayerUI
 {
     public partial class Form1 : Form
     {
-        private Mpv mpv;
+        private MpvFacade mpv;
         private List<string> playlist = new List<string>();
         private int currentIndex = 0;
 
@@ -28,7 +28,7 @@ namespace MpvPlayerUI
             try
             {
                 string dllPath = "mpv-1.dll";
-                mpv = new Mpv(dllPath);
+                mpv = new MpvFacade(dllPath);
                 mpv.Initialize();
             }
             catch (Exception ex)

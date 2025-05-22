@@ -46,7 +46,7 @@
     <Compile Include="Interfaces\IMPVEvents.cs" />
     <Compile Include="Interfaces\IMpvFunction.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
-    <Compile Include="Mpv.cs" />
+    <Compile Include="MpvFacade.cs" />
     <Compile Include="MpvFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowsImportedFunctions.cs" />

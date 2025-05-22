@@ -11,7 +11,7 @@ using MpvAPI.Interfaces;
 
 namespace MpvAPI
 {
-    public class Mpv : IDisposable
+    public class MpvFacade : IDisposable
     {
         public IMpvFunction Function
         {
@@ -34,7 +34,7 @@ namespace MpvAPI
         private IMpvFunction function;
         private IntPtr handle;
         private bool disposed = false;
-        public Mpv(string dllPath)
+        public MpvFacade(string dllPath)
         {
             if (dllPath == null) throw new ArgumentNullException("Null dll path");
             if (dllPath.Trim().Length == 0) throw new ArgumentException("Empty dll path");
@@ -232,7 +232,7 @@ namespace MpvAPI
         }
 
 
-        ~Mpv()
+        ~MpvFacade()
         {
             Dispose(false);
         }
