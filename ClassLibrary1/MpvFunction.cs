@@ -16,8 +16,10 @@ namespace MpvAPI
         public MpvTerminateDestroy TerminateDestroy { get; private set; }
         public MpvSetOption SetOption { get; private set; }
         public MpvSetOptionString SetOptionString { get; private set; }
-        public MpvGetPropertystring GetPropertyString { get; private set; }
+        public MpvGetPropertyString GetPropertyString { get; private set; }
         public MpvSetProperty SetProperty { get; private set; }
+        public MpvGetProperty GetProperty { get; private set; }
+        public MpvSetPropertyString SetPropertyString { get; private set; }
         public MpvFree Free { get; private set; }
 
         private IntPtr dllHandle;
@@ -42,8 +44,10 @@ namespace MpvAPI
             TerminateDestroy = LoadFunction<MpvTerminateDestroy>("mpv_terminate_destroy");
             SetOption = LoadFunction<MpvSetOption>("mpv_set_option");
             SetOptionString = LoadFunction<MpvSetOptionString>("mpv_set_option_string");
-            GetPropertyString = LoadFunction<MpvGetPropertystring>("mpv_get_property_string");
+            GetPropertyString = LoadFunction<MpvGetPropertyString>("mpv_get_property_string");
+            GetProperty = LoadFunction<MpvGetProperty>("mpv_get_property");
             SetProperty = LoadFunction<MpvSetProperty>("mpv_set_property");
+            SetPropertyString = LoadFunction<MpvSetPropertyString>("mpv_set_property_string");
             Free = LoadFunction<MpvFree>("mpv_free");
         }
         private TDelegate LoadFunction<TDelegate>(string name) where TDelegate: class
@@ -68,9 +72,5 @@ namespace MpvAPI
                 disposed = true;
             }
         }
-
-        [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int mpv_set_property_string(IntPtr ctx, string name, string data);
-
     }
 }

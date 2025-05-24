@@ -41,6 +41,7 @@ namespace MpvPlayerUI
                 string dllPath = "mpv-1.dll";
                 mpv = new MpvFacade(dllPath);
                 mpv.Initialize();
+                timer.Start();
             }
             catch (Exception ex)
             {
@@ -77,7 +78,7 @@ namespace MpvPlayerUI
             }
         }
 
-        private void btnNext_Click(object sender, EventArgs e)
+        private void playNext()
         {
             if (playlist.Count == 0)
             {
@@ -85,6 +86,11 @@ namespace MpvPlayerUI
             }
             currentIndex = (currentIndex + 1) % playlist.Count;
             PlayCurrent();
+        }
+
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            playNext();
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
@@ -162,6 +168,37 @@ namespace MpvPlayerUI
             mpv.SetVolume(10);
         }
 
+        private void volumeTrackBar_Scroll(object sender, EventArgs e)
+        {
+            // Se poate implementa pauza inainte si resume dupa pentru a scapa de parait
+            double volume = volumeTrackBar.Value;
+            mpv.SetVolume((int)volume * 10);
+            volumeLabel.Text = $"Volum: {volume * 10}%";
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            double current = mpv.GetTime();
+            double total = mpv.GetDuration();
+
+            if (current >= total - 1)
+            {
+                playNext();
+            }
+
+            if (current >= 0 && total > 0)
+            {
+                trackBarSong.Maximum = (int)total;
+                trackBarSong.Value = Math.Min((int)current, trackBarSong.Maximum);
+                timeLabel.Text = $"{(int)current} / {(int)total}";
+            }
+        }
+
+        private void trackBarSong_Scroll(object sender, EventArgs e)
+        {
+            mpv.SetTime(trackBarSong.Value);
+        }
+
         private void PlayCurrent()
         {
             if (playlist.Count == 0 || mpv == null)
@@ -227,13 +264,5 @@ namespace MpvPlayerUI
         public void TestSetPlaying(bool playing) => isPlaying = playing;
 
         public void SimulatePauseClick() => btnPause.PerformClick();
-
-        private void volumeTrackBar_Scroll(object sender, EventArgs e)
-        {
-            // Se poate implementa pauza inainte si resume dupa pentru a scapa de parait
-            double volume = volumeTrackBar.Value;
-            mpv.SetVolume((int)volume * 10);
-            volumeLabel.Text = $"Volum: {volume * 10}%";
-        }
     }
 }

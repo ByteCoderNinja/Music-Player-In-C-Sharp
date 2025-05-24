@@ -228,7 +228,46 @@ namespace MpvAPI
                 return;
             }
             string speedStr = speed.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            MpvFunction.mpv_set_property_string(Handle, "speed", speedStr);
+            Function.SetPropertyString(Handle, "speed", speedStr);
+        }
+
+        public void SetTime(double seconds)
+        {
+            if (Handle == IntPtr.Zero)
+                return;
+
+            string timeStr = seconds.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            Function.SetPropertyString(Handle, "time-pos", timeStr);
+        }
+
+        public double GetTime()
+        {
+            if (Handle == IntPtr.Zero)
+                return -1;
+
+            double time = 0;
+            Function.GetProperty(Handle, "time-pos", 5, ref time);
+
+            if (time == 0)
+            {
+                return -1;
+            }
+            return time;
+        }
+
+        public double GetDuration()
+        {
+            if (Handle == IntPtr.Zero)
+                return -1;
+
+            double duration = 0;
+            Function.GetProperty(Handle, "duration", 5, ref duration);
+
+            if (duration == 0)
+            {
+                return -1;
+            }
+            return duration;
         }
 
         public void SetVolume(double volume)
@@ -239,7 +278,7 @@ namespace MpvAPI
             }
 
             string volumeStr = volume.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            MpvFunction.mpv_set_property_string(Handle, "volume", volumeStr);
+            Function.SetPropertyString(Handle, "volume", volumeStr);
         }
 
         public double GetVolume()
