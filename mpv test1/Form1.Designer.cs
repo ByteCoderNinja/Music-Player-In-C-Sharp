@@ -20,6 +20,7 @@
 
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
@@ -28,6 +29,10 @@
             this.btnAddSong = new System.Windows.Forms.Button();
             this.listBoxSongs = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.volumeTrackBar = new System.Windows.Forms.TrackBar();
+            this.volumeLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -35,7 +40,7 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(640, 100);
+            this.panel1.Size = new System.Drawing.Size(784, 100);
             this.panel1.TabIndex = 0;
             // 
             // btnPause
@@ -79,9 +84,8 @@
             "2.0x"});
             this.comboSpeed.Location = new System.Drawing.Point(320, 294);
             this.comboSpeed.Name = "comboSpeed";
-            this.comboSpeed.Size = new System.Drawing.Size(90, 21);
+            this.comboSpeed.Size = new System.Drawing.Size(90, 24);
             this.comboSpeed.TabIndex = 4;
-            this.comboSpeed.SelectedIndex = 1;
             this.comboSpeed.SelectedIndexChanged += new System.EventHandler(this.comboSpeed_SelectedIndexChanged);
             // 
             // btnAddSong
@@ -97,15 +101,16 @@
             // listBoxSongs
             // 
             this.listBoxSongs.FormattingEnabled = true;
+            this.listBoxSongs.ItemHeight = 16;
             this.listBoxSongs.Location = new System.Drawing.Point(12, 120);
             this.listBoxSongs.Name = "listBoxSongs";
-            this.listBoxSongs.Size = new System.Drawing.Size(640, 134);
+            this.listBoxSongs.Size = new System.Drawing.Size(784, 132);
             this.listBoxSongs.TabIndex = 6;
             this.listBoxSongs.SelectedIndexChanged += new System.EventHandler(this.listBoxSongs_SelectedIndexChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(548, 290);
+            this.button1.Location = new System.Drawing.Point(692, 288);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(90, 30);
             this.button1.TabIndex = 8;
@@ -113,9 +118,29 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // volumeTrackBar
+            // 
+            this.volumeTrackBar.Location = new System.Drawing.Point(548, 274);
+            this.volumeTrackBar.Name = "volumeTrackBar";
+            this.volumeTrackBar.Size = new System.Drawing.Size(104, 56);
+            this.volumeTrackBar.TabIndex = 9;
+            this.volumeTrackBar.Value = 10;
+            this.volumeTrackBar.Scroll += new System.EventHandler(this.volumeTrackBar_Scroll);
+            // 
+            // volumeLabel
+            // 
+            this.volumeLabel.AutoSize = true;
+            this.volumeLabel.Location = new System.Drawing.Point(568, 314);
+            this.volumeLabel.Name = "volumeLabel";
+            this.volumeLabel.Size = new System.Drawing.Size(84, 16);
+            this.volumeLabel.TabIndex = 10;
+            this.volumeLabel.Text = "Volum: 100%";
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(670, 340);
+            this.ClientSize = new System.Drawing.Size(808, 342);
+            this.Controls.Add(this.volumeLabel);
+            this.Controls.Add(this.volumeTrackBar);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnAddSong);
             this.Controls.Add(this.comboSpeed);
@@ -126,10 +151,15 @@
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Mpv Music Player";
+            ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.TrackBar volumeTrackBar;
+        private System.Windows.Forms.Label volumeLabel;
     }
 }

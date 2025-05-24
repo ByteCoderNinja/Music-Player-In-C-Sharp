@@ -48,7 +48,7 @@ namespace MpvAPI
             {
                 if (Handle == IntPtr.Zero) return true;
                 var lpBuffer = IntPtr.Zero;
-                Function.GetPropertystring(Handle, GetUtf8Bytes("pause"), 1, ref lpBuffer);
+                Function.GetPropertyString(Handle, GetUtf8Bytes("pause"), 1, ref lpBuffer);
                 var isPaused = Marshal.PtrToStringAnsi(lpBuffer) == "yes";
                 Function.Free(lpBuffer);
                 return isPaused;
@@ -182,7 +182,7 @@ namespace MpvAPI
         {
             if (Handle == IntPtr.Zero) return IntPtr.Zero;
             var bytes = IntPtr.Zero;
-            bytes = (IntPtr)Function.GetPropertystring(Handle, GetUtf8Bytes(name), 4, ref bytes);
+            bytes = (IntPtr)Function.GetPropertyString(Handle, GetUtf8Bytes(name), 4, ref bytes);
             return bytes;
         }
         public static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
@@ -229,6 +229,34 @@ namespace MpvAPI
             }
             string speedStr = speed.ToString(System.Globalization.CultureInfo.InvariantCulture);
             MpvFunction.mpv_set_property_string(Handle, "speed", speedStr);
+        }
+
+        public void SetVolume(double volume)
+        {
+            if (Handle == IntPtr.Zero)
+            {
+                return;
+            }
+
+            string volumeStr = volume.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            MpvFunction.mpv_set_property_string(Handle, "volume", volumeStr);
+        }
+
+        public double GetVolume()
+        {
+            if (Handle == IntPtr.Zero) return -1;
+
+            IntPtr result = IntPtr.Zero;
+            Function.GetPropertyString(Handle, GetUtf8Bytes("volume"), 4, ref result);
+            if (result == IntPtr.Zero) return -1;
+
+            string volStr = Marshal.PtrToStringAnsi(result);
+            Function.Free(result);
+
+            if (double.TryParse(volStr, out double volume))
+                return volume;
+
+            return -1;
         }
 
 

@@ -16,7 +16,7 @@ namespace MpvAPI
         public MpvTerminateDestroy TerminateDestroy { get; private set; }
         public MpvSetOption SetOption { get; private set; }
         public MpvSetOptionString SetOptionString { get; private set; }
-        public MpvGetPropertystring GetPropertystring { get; private set; }
+        public MpvGetPropertystring GetPropertyString { get; private set; }
         public MpvSetProperty SetProperty { get; private set; }
         public MpvFree Free { get; private set; }
 
@@ -42,7 +42,7 @@ namespace MpvAPI
             TerminateDestroy = LoadFunction<MpvTerminateDestroy>("mpv_terminate_destroy");
             SetOption = LoadFunction<MpvSetOption>("mpv_set_option");
             SetOptionString = LoadFunction<MpvSetOptionString>("mpv_set_option_string");
-            GetPropertystring = LoadFunction<MpvGetPropertystring>("mpv_get_property_string");
+            GetPropertyString = LoadFunction<MpvGetPropertystring>("mpv_get_property_string");
             SetProperty = LoadFunction<MpvSetProperty>("mpv_set_property");
             Free = LoadFunction<MpvFree>("mpv_free");
         }

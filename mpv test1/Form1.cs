@@ -159,6 +159,7 @@ namespace MpvPlayerUI
             {
                 MessageBox.Show("Fișierul de help nu a fost găsit!", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            mpv.SetVolume(10);
         }
 
         private void PlayCurrent()
@@ -226,5 +227,13 @@ namespace MpvPlayerUI
         public void TestSetPlaying(bool playing) => isPlaying = playing;
 
         public void SimulatePauseClick() => btnPause.PerformClick();
+
+        private void volumeTrackBar_Scroll(object sender, EventArgs e)
+        {
+            // Se poate implementa pauza inainte si resume dupa pentru a scapa de parait
+            double volume = volumeTrackBar.Value;
+            mpv.SetVolume((int)volume * 10);
+            volumeLabel.Text = $"Volum: {volume * 10}%";
+        }
     }
 }

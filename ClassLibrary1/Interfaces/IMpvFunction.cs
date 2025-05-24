@@ -16,7 +16,7 @@ namespace MpvAPI.Interfaces
         MpvTerminateDestroy TerminateDestroy { get; }
         MpvSetOption SetOption { get; }
         MpvSetOptionString SetOptionString { get; }
-        MpvGetPropertystring GetPropertystring { get; }
+        MpvGetPropertystring GetPropertyString { get; }
         MpvSetProperty SetProperty   { get; }
         MpvFree Free { get; }
     }
