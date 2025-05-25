@@ -19,8 +19,8 @@ namespace MpvAPI.Interfaces
         MpvGetPropertyString GetPropertyString { get; }
         MpvSetPropertyString SetPropertyString { get; }
         MpvSetProperty SetProperty { get; }
-
         MpvGetProperty GetProperty { get; }
+        MpvGetPropertyDouble GetPropertyDouble { get;  }
         MpvFree Free { get; }
     }
 }

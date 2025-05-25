@@ -26,13 +26,16 @@ namespace MpvAPI
     public delegate int MpvSetOptionString(IntPtr mpvHandle, byte[] name, byte[] value);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int MpvGetPropertyString(IntPtr mpvHandle, byte[] name, int format, ref IntPtr data);
+    public delegate int MpvGetPropertyString(IntPtr mpvHandle, string name, int format, out IntPtr data);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int MpvSetProperty(IntPtr mpvHandle, byte[] name, int format, ref byte[] data);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate int MpvGetProperty(IntPtr mpvHandle, [MarshalAs(UnmanagedType.LPStr)] string name, int format, ref double data);
+    public delegate int MpvGetProperty(IntPtr mpvHandle, [MarshalAs(UnmanagedType.LPStr)] string name, int format, out IntPtr data);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate int MpvGetPropertyDouble(IntPtr mpvHandle, string name, int format, ref double data);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int MpvSetPropertyString(IntPtr ctx, string name, string data);

@@ -4,6 +4,7 @@
 // Sablon: Wrapper
 
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.SqlServer.Server;
@@ -42,16 +43,55 @@ namespace MpvAPI
             
         }
 
+        public void Initialize()
+        {
+            try
+            {
+                Handle = Function.Create();
+                if (Handle == IntPtr.Zero)
+                    throw new Exception("Eșec la creare context MPV.");
+                if (Function.Initialize(Handle) != 0)
+                    throw new Exception("Eșec la inițializarea funcțiilor MPV.");
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Eroare la inițializare MPV.", ex);
+            }
+        }
+        /*
+[DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+public static extern int mpv_get_property(IntPtr handle, string name, int format, out IntPtr data);
+
+        [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void mpv_free(IntPtr data);
+
+        public bool IsPausedRaw()
+        {
+            if (Handle == IntPtr.Zero)
+                return true;
+
+            IntPtr ptr;
+            int result = mpv_get_property(Handle, "pause", 1, out ptr);
+
+            if (result != 0 || ptr == IntPtr.Zero)
+                return false;
+
+            string value = Marshal.PtrToStringAnsi(ptr);
+            mpv_free(ptr);
+
+            return value == "yes";
+        }
+        */
         public bool isPaused()
         {
             try
             {
                 if (Handle == IntPtr.Zero) return true;
-                var lpBuffer = IntPtr.Zero;
-                Function.GetPropertyString(Handle, GetUtf8Bytes("pause"), 1, ref lpBuffer);
-                var isPaused = Marshal.PtrToStringAnsi(lpBuffer) == "yes";
+                IntPtr lpBuffer;
+                Function.GetProperty(Handle, "pause", 1, out lpBuffer);
+                string paused = Marshal.PtrToStringAnsi(lpBuffer);
                 Function.Free(lpBuffer);
-                return isPaused;
+                return paused == "yes";
             }
             catch (Exception ex)
             {
@@ -82,22 +122,6 @@ namespace MpvAPI
             catch (Exception ex)
             {
                 throw new InvalidOperationException("Nu s-a putut relua redarea.", ex);
-            }
-        }
-
-        public void Initialize()
-        {
-            try
-            {
-                Handle = Function.Create();
-                if (Handle == IntPtr.Zero)
-                    throw new Exception("Eșec la creare context MPV.");
-                if (Function.Initialize(Handle) != 0)
-                    throw new Exception("Eșec la inițializarea funcțiilor MPV.");
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Eroare la inițializare MPV.", ex);
             }
         }
 
@@ -164,7 +188,7 @@ namespace MpvAPI
             if((name != null && name.Trim().Length>0)&&(data != null && data.Length > 0))
             {
                 var bytes = GetUtf8Bytes(data);
-                Function.SetProperty(Handle, GetUtf8Bytes(name), 1, ref bytes);
+                //Function.SetProperty(Handle, GetUtf8Bytes(name), 1, ref bytes);
                 SetProperty(name, bytes, 1);
             }
         }
@@ -182,7 +206,7 @@ namespace MpvAPI
         {
             if (Handle == IntPtr.Zero) return IntPtr.Zero;
             var bytes = IntPtr.Zero;
-            bytes = (IntPtr)Function.GetPropertyString(Handle, GetUtf8Bytes(name), 4, ref bytes);
+            bytes = (IntPtr)Function.GetPropertyString(Handle, name, 4, out bytes);
             return bytes;
         }
         public static IntPtr AllocateUtf8IntPtrArrayWithSentinel(string[] arr, out IntPtr[] byteArrayPointers)
@@ -246,7 +270,7 @@ namespace MpvAPI
                 return -1;
 
             double time = 0;
-            Function.GetProperty(Handle, "time-pos", 5, ref time);
+            Function.GetPropertyDouble(Handle, "time-pos", 5, ref time);
 
             if (time == 0)
             {
@@ -261,13 +285,13 @@ namespace MpvAPI
                 return -1;
 
             double duration = 0;
-            Function.GetProperty(Handle, "duration", 5, ref duration);
+            Function.GetPropertyDouble(Handle, "duration", 5, ref duration);
 
             if (duration == 0)
             {
                 return -1;
             }
-            return duration;
+            return (double)duration;
         }
 
         public void SetVolume(double volume)
@@ -286,7 +310,7 @@ namespace MpvAPI
             if (Handle == IntPtr.Zero) return -1;
 
             IntPtr result = IntPtr.Zero;
-            Function.GetPropertyString(Handle, GetUtf8Bytes("volume"), 4, ref result);
+            Function.GetPropertyString(Handle, "volume", 4, out result);
             if (result == IntPtr.Zero) return -1;
 
             string volStr = Marshal.PtrToStringAnsi(result);

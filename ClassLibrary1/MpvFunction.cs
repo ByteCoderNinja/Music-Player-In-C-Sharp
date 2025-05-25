@@ -19,6 +19,7 @@ namespace MpvAPI
         public MpvGetPropertyString GetPropertyString { get; private set; }
         public MpvSetProperty SetProperty { get; private set; }
         public MpvGetProperty GetProperty { get; private set; }
+        public MpvGetPropertyDouble GetPropertyDouble { get; private set; }
         public MpvSetPropertyString SetPropertyString { get; private set; }
         public MpvFree Free { get; private set; }
 
@@ -46,6 +47,7 @@ namespace MpvAPI
             SetOptionString = LoadFunction<MpvSetOptionString>("mpv_set_option_string");
             GetPropertyString = LoadFunction<MpvGetPropertyString>("mpv_get_property_string");
             GetProperty = LoadFunction<MpvGetProperty>("mpv_get_property");
+            GetPropertyDouble = LoadFunction<MpvGetPropertyDouble>("mpv_get_property");
             SetProperty = LoadFunction<MpvSetProperty>("mpv_set_property");
             SetPropertyString = LoadFunction<MpvSetPropertyString>("mpv_set_property_string");
             Free = LoadFunction<MpvFree>("mpv_free");

@@ -66,10 +66,12 @@ namespace MpvPlayerUI
                 if (mpv.isPaused())
                 {
                     mpv.Resume();
+                    btnPause.Text = "Pause";
                 }
                 else
                 {
                     mpv.Pause();
+                    btnPause.Text = "Play";
                 }
             }
             catch (Exception ex)
@@ -178,19 +180,22 @@ namespace MpvPlayerUI
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            double current = mpv.GetTime();
-            double total = mpv.GetDuration();
-
-            if (current >= total - 1)
-            {
-                playNext();
-            }
+            string currentString, totalString;
+            int current = (int)mpv.GetTime();
+            int total = (int)mpv.GetDuration();
 
             if (current >= 0 && total > 0)
             {
-                trackBarSong.Maximum = (int)total;
-                trackBarSong.Value = Math.Min((int)current, trackBarSong.Maximum);
-                timeLabel.Text = $"{(int)current} / {(int)total}";
+                if (current >= total - 1)
+                {
+                    playNext();
+                }
+                currentString = Utilities.secondsToTime(current);
+                totalString = Utilities.secondsToTime(total);
+                trackBarSong.Maximum = total;
+                trackBarSong.Value = Math.Min(current, trackBarSong.Maximum);
+                
+                timeLabel.Text = $"{currentString} / {totalString}";
             }
         }
 

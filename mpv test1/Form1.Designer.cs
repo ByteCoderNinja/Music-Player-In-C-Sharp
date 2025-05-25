@@ -146,6 +146,7 @@
             // 
             // trackBarSong
             // 
+            this.trackBarSong.Cursor = System.Windows.Forms.Cursors.Cross;
             this.trackBarSong.Location = new System.Drawing.Point(12, 283);
             this.trackBarSong.Maximum = 1000;
             this.trackBarSong.Name = "trackBarSong";
