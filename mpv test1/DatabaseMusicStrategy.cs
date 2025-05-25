@@ -19,5 +19,7 @@ namespace mpv_test1
         {
             return new List<string>();
         }
+
+        public bool SaveMusic(string path) { return false; }
     }
 }

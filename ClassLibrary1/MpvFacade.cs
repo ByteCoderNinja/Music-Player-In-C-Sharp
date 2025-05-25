@@ -14,6 +14,9 @@ namespace MpvAPI
 {
     public class MpvFacade : IDisposable
     {
+        /**
+         * Initiere API de accesare a functiilor din MPV, ce sunt stringuri, de ex. mpv_get_property
+         */
         public IMpvFunction Function
         {
             get => function;
@@ -23,6 +26,10 @@ namespace MpvAPI
                 function = value;
             }
         }
+
+        /**
+         * Pointer-ul ce contine contextul/legatura cu MPV
+         */
         public IntPtr Handle
         {
             get => handle;
@@ -40,7 +47,6 @@ namespace MpvAPI
             if (dllPath == null) throw new ArgumentNullException("Null dll path");
             if (dllPath.Trim().Length == 0) throw new ArgumentException("Empty dll path");
             Function = new MpvFunction(dllPath);
-            
         }
 
         public void Initialize()
@@ -58,30 +64,10 @@ namespace MpvAPI
                 throw new InvalidOperationException("Eroare la inițializare MPV.", ex);
             }
         }
-        /*
-[DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
-public static extern int mpv_get_property(IntPtr handle, string name, int format, out IntPtr data);
 
-        [DllImport("mpv-1.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void mpv_free(IntPtr data);
-
-        public bool IsPausedRaw()
-        {
-            if (Handle == IntPtr.Zero)
-                return true;
-
-            IntPtr ptr;
-            int result = mpv_get_property(Handle, "pause", 1, out ptr);
-
-            if (result != 0 || ptr == IntPtr.Zero)
-                return false;
-
-            string value = Marshal.PtrToStringAnsi(ptr);
-            mpv_free(ptr);
-
-            return value == "yes";
-        }
-        */
+        /**
+         * Verificare cu MPV daca melodia actuala este pe pauza
+         */
         public bool isPaused()
         {
             try
@@ -188,7 +174,6 @@ public static extern int mpv_get_property(IntPtr handle, string name, int format
             if((name != null && name.Trim().Length>0)&&(data != null && data.Length > 0))
             {
                 var bytes = GetUtf8Bytes(data);
-                //Function.SetProperty(Handle, GetUtf8Bytes(name), 1, ref bytes);
                 SetProperty(name, bytes, 1);
             }
         }
@@ -227,22 +212,6 @@ public static extern int mpv_get_property(IntPtr handle, string name, int format
         private static byte[] GetUtf8Bytes(string s)
         {
             return Encoding.UTF8.GetBytes(s + "\0");
-        }
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-        protected virtual void Dispose(bool disposing)
-        {
-            if(!disposed)
-            {
-                Function.TerminateDestroy(Handle);
-                if (disposing && Function is IDisposable disposableFunctions)
-                {
-                    disposableFunctions.Dispose();
-                }
-                disposed = true;
-            }
         }
 
         public void SetSpeed(float speed)
@@ -322,6 +291,25 @@ public static extern int mpv_get_property(IntPtr handle, string name, int format
             return -1;
         }
 
+        /**
+         * Curatare resurse MPV
+         */
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                Function.TerminateDestroy(Handle);
+                if (disposing && Function is IDisposable disposableFunctions)
+                {
+                    disposableFunctions.Dispose();
+                }
+                disposed = true;
+            }
+        }
 
         ~MpvFacade()
         {

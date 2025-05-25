@@ -9,5 +9,6 @@ namespace MpvPlayerUI
     interface ISourceStrategy
     {
         List<string> LoadMusic();
+        bool SaveMusic(string musicPath);
     }
 }

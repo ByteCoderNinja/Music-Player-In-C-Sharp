@@ -18,7 +18,7 @@ namespace MpvPlayerUI
     {
         private MpvFacade mpv;
         private List<string> playlist = new List<string>();
-        private ISourceStrategy musicSource = new LocalMusicStrategy("..\\..\\..\\local");
+        private ISourceStrategy musicSource = new LocalMusicStrategy("..\\..\\..\\local\\");
         private int currentIndex = 0;
 
         public Form1()
@@ -27,6 +27,7 @@ namespace MpvPlayerUI
             this.Load += Form1_Load;
             this.FormClosing += Form1_FormClosing;
 
+            // Adaugare muzica din folderul "local" in interfata
             foreach (var song in musicSource.LoadMusic())
             {
                 addMusic(song);
@@ -39,8 +40,10 @@ namespace MpvPlayerUI
             try
             {
                 string dllPath = "mpv-1.dll";
+                // API de acces al functiilor MPV
                 mpv = new MpvFacade(dllPath);
                 mpv.Initialize();
+                // Timer-ul ce raspunde de actualizarea barei de timp a melodiei
                 timer.Start();
             }
             catch (Exception ex)
@@ -86,6 +89,7 @@ namespace MpvPlayerUI
             {
                 return;
             }
+            // Urmatorul index sau primul in caz ca am ajuns la final
             currentIndex = (currentIndex + 1) % playlist.Count;
             PlayCurrent();
         }
@@ -126,7 +130,6 @@ namespace MpvPlayerUI
             }
         }
 
-
         private void btnAddSong_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -141,8 +144,11 @@ namespace MpvPlayerUI
                     {
                         continue;
                     }
-                    playlist.Add(ofd.FileNames[i]);
-                    listBoxSongs.Items.Add(System.IO.Path.GetFileName(ofd.FileNames[i]));
+                    bool success = musicSource.SaveMusic(ofd.FileNames[i]);
+                    if (success)
+                    {
+                        addMusic(ofd.FileNames[i]);
+                    }
                 }
             }
         }
@@ -158,6 +164,7 @@ namespace MpvPlayerUI
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Citire fisier help
             string helpFile = System.IO.Path.Combine(Application.StartupPath, "MusicPlayerHelper.chm");
             if (System.IO.File.Exists(helpFile))
             {
@@ -167,17 +174,19 @@ namespace MpvPlayerUI
             {
                 MessageBox.Show("Fișierul de help nu a fost găsit!", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            mpv.SetVolume(10);
         }
 
         private void volumeTrackBar_Scroll(object sender, EventArgs e)
         {
-            // Se poate implementa pauza inainte si resume dupa pentru a scapa de parait
             double volume = volumeTrackBar.Value;
             mpv.SetVolume((int)volume * 10);
             volumeLabel.Text = $"Volum: {volume * 10}%";
         }
 
+        /**
+         * Timer ce citeste date despre melodie (durata trecuta si durata totala)
+         * Actualizeaza trackBar-ul cantecului si label-ul cu timpul
+         */
         private void timer_Tick(object sender, EventArgs e)
         {
             string currentString, totalString;
@@ -204,6 +213,9 @@ namespace MpvPlayerUI
             mpv.SetTime(trackBarSong.Value);
         }
 
+        /**
+         * Porneste cantecul de la indexul curent
+         */
         private void PlayCurrent()
         {
             if (playlist.Count == 0 || mpv == null)
