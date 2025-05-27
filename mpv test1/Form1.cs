@@ -20,6 +20,8 @@ namespace MpvPlayerUI
         private List<string> playlist = new List<string>();
         private ISourceStrategy musicSource = new LocalMusicStrategy("..\\..\\..\\local\\");
         private int currentIndex = 0;
+        public int CurrentIndex() { return  currentIndex; }
+        public List<string> Playlist() { return playlist; }
 
         public Form1()
         {
@@ -242,7 +244,26 @@ namespace MpvPlayerUI
 
         // Partea de testare a butoanelor
 
-        public void TestAddSong(string song) => listBoxSongs.Items.Add(song);
+        private bool isPlaying = false;
+        public bool IsPlaying => isPlaying;
+
+        public void TestSetPlaying(bool playing) => isPlaying = playing;
+
+        public void SimulatePauseClick() => btnPause.PerformClick();
+
+        public List<string> SongList { get; private set; } = new List<string>();
+
+        public double Volume { get; private set; } = 1.0;
+
+        public void TestAddSong(string song)
+        {
+            if (!playlist.Contains(song))
+            {
+                playlist.Add(song);
+                isPlaying = true;
+                listBoxSongs.Items.Add(System.IO.Path.GetFileName(song));
+            }
+        }
 
         public int SongsCount => listBoxSongs.Items.Count;
 
@@ -253,7 +274,14 @@ namespace MpvPlayerUI
         public void SimulateNextClick()
         {
             btnNext.PerformClick();
-            ++listBoxSongs.SelectedIndex;
+            if (currentIndex < playlist.Count - 1)
+            {
+                ++currentIndex;
+            }
+            else
+            {
+                 currentIndex = 0;
+            }
         }
 
         public void TestSelectSpeed(string speed)
@@ -261,7 +289,7 @@ namespace MpvPlayerUI
             if (comboSpeed.Items.Contains(speed))
                 comboSpeed.SelectedItem = speed;
             else
-                throw new ArgumentException("Viteză invalidă");
+                comboSpeed.SelectedItem = "1.0x";
         }
 
         public double SelectedSpeed
@@ -269,17 +297,28 @@ namespace MpvPlayerUI
             get
             {
                 string selected = comboSpeed.SelectedItem as string;
-                if (selected != null && selected.EndsWith("x"))
-                    return double.Parse(selected.Replace("x", ""));
-                throw new InvalidOperationException("Viteză invalidă sau neselectată");
+                if (selected != null && selected.EndsWith("x") && double.TryParse(selected.Replace("x", ""), out var speed))
+                    return speed;
+                return 1.0;
             }
         }
 
-        private bool isPlaying = true;
-        public bool IsPlaying => isPlaying;
+        public void SimulateStopClick()
+        {
+            isPlaying = false;
+        }
 
-        public void TestSetPlaying(bool playing) => isPlaying = playing;
-
-        public void SimulatePauseClick() => btnPause.PerformClick();
+        public void SimulatePreviousClick()
+        {
+            btnPrevious.PerformClick();
+            if (currentIndex > 0)
+            {
+                --currentIndex;
+            }
+            else if (currentIndex == 0)
+            {
+                currentIndex = playlist.Count - 1;
+            }
+        }
     }
 }
