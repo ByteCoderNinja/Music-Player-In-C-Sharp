@@ -87,7 +87,11 @@
             "2.0x"});
             this.comboSpeed.Location = new System.Drawing.Point(320, 365);
             this.comboSpeed.Name = "comboSpeed";
+
             this.comboSpeed.Size = new System.Drawing.Size(90, 24);
+
+            //this.comboSpeed.Size = new System.Drawing.Size(90, 28);
+
             this.comboSpeed.TabIndex = 4;
             this.comboSpeed.SelectedIndexChanged += new System.EventHandler(this.comboSpeed_SelectedIndexChanged);
             // 
@@ -104,10 +108,17 @@
             // listBoxSongs
             // 
             this.listBoxSongs.FormattingEnabled = true;
+
             this.listBoxSongs.ItemHeight = 16;
             this.listBoxSongs.Location = new System.Drawing.Point(12, 120);
             this.listBoxSongs.Name = "listBoxSongs";
             this.listBoxSongs.Size = new System.Drawing.Size(784, 132);
+
+          /*  this.listBoxSongs.ItemHeight = 20;
+            this.listBoxSongs.Location = new System.Drawing.Point(12, 120);
+            this.listBoxSongs.Name = "listBoxSongs";
+            this.listBoxSongs.Size = new System.Drawing.Size(640, 124);*/
+
             this.listBoxSongs.TabIndex = 6;
             this.listBoxSongs.SelectedIndexChanged += new System.EventHandler(this.listBoxSongs_SelectedIndexChanged);
             // 
