@@ -136,7 +136,7 @@ namespace MpvPlayerUI
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            ofd.Filter = "Fișiere audio (*.mp3;*.wav;*.flac)|*.mp3;*.wav;*.flac";
+            ofd.Filter = "Fișiere audio (*.mp3;*.wav;*.flac;*.mp4)|*.mp3;*.wav;*.flac;*.mp4";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 int i;
@@ -253,7 +253,7 @@ namespace MpvPlayerUI
 
         public List<string> SongList { get; private set; } = new List<string>();
 
-        public double Volume { get; private set; } = 1.0;
+        public double Volume { get; set; } = 1.0;
 
         public void TestAddSong(string song)
         {

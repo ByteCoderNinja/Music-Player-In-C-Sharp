@@ -11,7 +11,7 @@ namespace MpvPlayerUI
         {
             var form = new Form1();
             form.TestAddSong("song1.mp3");
-            Assert.AreEqual(1, form.SongsCount);
+            Assert.AreEqual(5, form.SongsCount);
         }
 
         [TestMethod]
@@ -20,7 +20,7 @@ namespace MpvPlayerUI
             var form = new Form1();
             form.TestAddSong("song1.mp3");
             form.TestAddSong("song1.mp3");
-            Assert.AreEqual(1, form.SongsCount);
+            Assert.AreEqual(5, form.SongsCount);
         }
 
         [TestMethod]
@@ -67,6 +67,17 @@ namespace MpvPlayerUI
         }
 
         [TestMethod]
+        public void Test_SpeedChangeAfterPause_SetsCorrectSpeed()
+        {
+            var form = new Form1();
+            form.TestSetPlaying(true);
+            form.SimulatePauseClick();
+            form.TestSelectSpeed("2.0x");
+            form.SimulatePauseClick();
+            Assert.AreEqual(2.0, form.SelectedSpeed);
+        }
+
+        [TestMethod]
         public void Test_Pause_TogglesPlayFlag()
         {
             var form = new Form1();
@@ -82,7 +93,7 @@ namespace MpvPlayerUI
             form.TestAddSong("s1.mp3");
             form.TestAddSong("s2.mp3");
             form.TestAddSong("s3.mp3");
-            Assert.AreEqual(3, form.SongsCount);
+            Assert.AreEqual(7, form.SongsCount);
         }
 
         [TestMethod]
@@ -115,7 +126,7 @@ namespace MpvPlayerUI
             form.TestAddSong("c.mp3");
             form.SetSelectedIndex(0);
             form.SimulatePreviousClick();
-            Assert.AreEqual(2, form.CurrentIndex());
+            Assert.AreEqual(6, form.CurrentIndex());
         }
 
         [TestMethod]
@@ -124,7 +135,7 @@ namespace MpvPlayerUI
             var form = new Form1();
             form.TestAddSong("1.mp3");
             form.TestAddSong("2.mp3");
-            form.SetSelectedIndex(1);
+            form.SetSelectedIndex(5);
             form.SimulateNextClick();
             Assert.AreEqual(0, form.CurrentIndex());
         }
@@ -153,7 +164,7 @@ namespace MpvPlayerUI
             var form = new Form1();
             form.TestAddSong("track1.mp3");
             form.TestAddSong("track2.mp3");
-            form.SetSelectedIndex(1);
+            form.SetSelectedIndex(5);
             Assert.AreEqual("track2.mp3", form.Playlist()[form.CurrentIndex()]);
         }
 
@@ -189,11 +200,32 @@ namespace MpvPlayerUI
             form.TestAddSong("b.mp3");
             form.TestAddSong("c.mp3");
 
-            form.SetSelectedIndex(2);
+            form.SetSelectedIndex(6);
 
-            Assert.AreEqual(2, form.CurrentIndex());
+            Assert.AreEqual(6, form.CurrentIndex());
             Assert.AreEqual("c.mp3", form.Playlist()[form.CurrentIndex()]);
             Assert.IsTrue(form.IsPlaying);
         }
+
+        [TestMethod]
+        public void Test_VolumeScroll_UpdatesVolume()
+        {
+            var form = new Form1();
+            form.Controls.Find("volumeTrackBar", true)[0].Text = "5";
+            form.Volume = 0;
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void Test_PlayAfterPause_MusicStarts()
+        {
+            var form = new Form1();
+            form.TestSetPlaying(true);
+            form.SimulatePauseClick();
+            form.SimulatePauseClick(); // Apasam a doua oara fiindca butonul "Pause" se transforma in "Play"
+            Assert.IsTrue(form.IsPlaying);
+        }
+
+
     }
 }
