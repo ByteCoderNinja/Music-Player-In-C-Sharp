@@ -17,9 +17,9 @@ namespace MpvPlayerUI
     public partial class Form1 : Form
     {
         private MpvFacade mpv;
-        private List<string> playlist = new List<string>();
+        public List<string> playlist = new List<string>();
         private ISourceStrategy musicSource = new LocalMusicStrategy("..\\..\\..\\local\\");
-        private int currentIndex = 0;
+        public int currentIndex = 0;
         public int CurrentIndex() { return  currentIndex; }
         public List<string> Playlist() { return playlist; }
 
@@ -240,85 +240,6 @@ namespace MpvPlayerUI
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             mpv?.Dispose();
-        }
-
-        // Partea de testare a butoanelor
-
-        private bool isPlaying = false;
-        public bool IsPlaying => isPlaying;
-
-        public void TestSetPlaying(bool playing) => isPlaying = playing;
-
-        public void SimulatePauseClick() => btnPause.PerformClick();
-
-        public List<string> SongList { get; private set; } = new List<string>();
-
-        public double Volume { get; set; } = 1.0;
-
-        public void TestAddSong(string song)
-        {
-            if (!playlist.Contains(song))
-            {
-                playlist.Add(song);
-                isPlaying = true;
-                listBoxSongs.Items.Add(System.IO.Path.GetFileName(song));
-            }
-        }
-
-        public int SongsCount => listBoxSongs.Items.Count;
-
-        public void SetSelectedIndex(int i) => listBoxSongs.SelectedIndex = i;
-
-        public int SelectedIndex => listBoxSongs.SelectedIndex;
-
-        public void SimulateNextClick()
-        {
-            btnNext.PerformClick();
-            if (currentIndex < playlist.Count - 1)
-            {
-                ++currentIndex;
-            }
-            else
-            {
-                 currentIndex = 0;
-            }
-        }
-
-        public void TestSelectSpeed(string speed)
-        {
-            if (comboSpeed.Items.Contains(speed))
-                comboSpeed.SelectedItem = speed;
-            else
-                comboSpeed.SelectedItem = "1.0x";
-        }
-
-        public double SelectedSpeed
-        {
-            get
-            {
-                string selected = comboSpeed.SelectedItem as string;
-                if (selected != null && selected.EndsWith("x") && double.TryParse(selected.Replace("x", ""), out var speed))
-                    return speed;
-                return 1.0;
-            }
-        }
-
-        public void SimulateStopClick()
-        {
-            isPlaying = false;
-        }
-
-        public void SimulatePreviousClick()
-        {
-            btnPrevious.PerformClick();
-            if (currentIndex > 0)
-            {
-                --currentIndex;
-            }
-            else if (currentIndex == 0)
-            {
-                currentIndex = playlist.Count - 1;
-            }
         }
     }
 }

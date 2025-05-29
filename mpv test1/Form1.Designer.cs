@@ -2,14 +2,14 @@
 {
     partial class Form1
     {
-        private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btnPause;
-        private System.Windows.Forms.Button btnNext;
-        private System.Windows.Forms.Button btnPrevious;
-        private System.Windows.Forms.ComboBox comboSpeed;
-        private System.Windows.Forms.Button btnAddSong;
-        private System.Windows.Forms.ListBox listBoxSongs;
+        public System.ComponentModel.IContainer components = null;
+        public System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.Button btnPause;
+        public System.Windows.Forms.Button btnNext;
+        public System.Windows.Forms.Button btnPrevious;
+        public System.Windows.Forms.ComboBox comboSpeed;
+        public System.Windows.Forms.Button btnAddSong;
+        public System.Windows.Forms.ListBox listBoxSongs;
 
         protected override void Dispose(bool disposing)
         {
@@ -43,7 +43,7 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Location = new System.Drawing.Point(12, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(784, 100);
+            this.panel1.Size = new System.Drawing.Size(388, 232);
             this.panel1.TabIndex = 0;
             // 
             // btnPause
@@ -87,11 +87,7 @@
             "2.0x"});
             this.comboSpeed.Location = new System.Drawing.Point(320, 365);
             this.comboSpeed.Name = "comboSpeed";
-
-            this.comboSpeed.Size = new System.Drawing.Size(90, 24);
-
-            //this.comboSpeed.Size = new System.Drawing.Size(90, 28);
-
+            this.comboSpeed.Size = new System.Drawing.Size(90, 28);
             this.comboSpeed.TabIndex = 4;
             this.comboSpeed.SelectedIndexChanged += new System.EventHandler(this.comboSpeed_SelectedIndexChanged);
             // 
@@ -108,17 +104,10 @@
             // listBoxSongs
             // 
             this.listBoxSongs.FormattingEnabled = true;
-
-            this.listBoxSongs.ItemHeight = 16;
-            this.listBoxSongs.Location = new System.Drawing.Point(12, 120);
+            this.listBoxSongs.ItemHeight = 20;
+            this.listBoxSongs.Location = new System.Drawing.Point(408, 20);
             this.listBoxSongs.Name = "listBoxSongs";
-            this.listBoxSongs.Size = new System.Drawing.Size(784, 132);
-
-          /*  this.listBoxSongs.ItemHeight = 20;
-            this.listBoxSongs.Location = new System.Drawing.Point(12, 120);
-            this.listBoxSongs.Name = "listBoxSongs";
-            this.listBoxSongs.Size = new System.Drawing.Size(640, 124);*/
-
+            this.listBoxSongs.Size = new System.Drawing.Size(388, 224);
             this.listBoxSongs.TabIndex = 6;
             this.listBoxSongs.SelectedIndexChanged += new System.EventHandler(this.listBoxSongs_SelectedIndexChanged);
             // 
@@ -141,7 +130,7 @@
             // 
             this.volumeTrackBar.Location = new System.Drawing.Point(548, 345);
             this.volumeTrackBar.Name = "volumeTrackBar";
-            this.volumeTrackBar.Size = new System.Drawing.Size(104, 56);
+            this.volumeTrackBar.Size = new System.Drawing.Size(104, 69);
             this.volumeTrackBar.TabIndex = 9;
             this.volumeTrackBar.Value = 10;
             this.volumeTrackBar.Scroll += new System.EventHandler(this.volumeTrackBar_Scroll);
@@ -151,7 +140,7 @@
             this.volumeLabel.AutoSize = true;
             this.volumeLabel.Location = new System.Drawing.Point(568, 385);
             this.volumeLabel.Name = "volumeLabel";
-            this.volumeLabel.Size = new System.Drawing.Size(84, 16);
+            this.volumeLabel.Size = new System.Drawing.Size(103, 20);
             this.volumeLabel.TabIndex = 10;
             this.volumeLabel.Text = "Volum: 100%";
             // 
@@ -161,7 +150,7 @@
             this.trackBarSong.Location = new System.Drawing.Point(12, 283);
             this.trackBarSong.Maximum = 1000;
             this.trackBarSong.Name = "trackBarSong";
-            this.trackBarSong.Size = new System.Drawing.Size(784, 56);
+            this.trackBarSong.Size = new System.Drawing.Size(784, 69);
             this.trackBarSong.TabIndex = 11;
             this.trackBarSong.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBarSong.Scroll += new System.EventHandler(this.trackBarSong_Scroll);
@@ -171,7 +160,7 @@
             this.timeLabel.AutoSize = true;
             this.timeLabel.Location = new System.Drawing.Point(32, 322);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(113, 16);
+            this.timeLabel.Size = new System.Drawing.Size(145, 20);
             this.timeLabel.TabIndex = 12;
             this.timeLabel.Text = "00:00:00 / 00:00:00";
             this.timeLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
