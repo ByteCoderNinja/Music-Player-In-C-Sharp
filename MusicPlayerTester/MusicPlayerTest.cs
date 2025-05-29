@@ -1,4 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿/**************************************************************************
+ *                                                                        *
+ *  Description: Testing Class                                            *
+ *  Website: https://github.com/SorinNoroc/MusicPlayer                    *
+ *  Copyright:   (c) 2025, Timofte Constantin                             *
+ *                                                                        *
+ *  This code and information is provided "as is" without warranty of     *
+ *  any kind, either expressed or implied, including but not limited      *
+ *  to the implied warranties of merchantability or fitness for a         *
+ *  particular purpose. You are free to use this source code in your      *
+ *  applications as long as the original copyright notice is included.    *
+ *                                                                        *
+ **************************************************************************/
+
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace MpvPlayerUI
