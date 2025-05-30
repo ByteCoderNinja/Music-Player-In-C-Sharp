@@ -25,9 +25,9 @@ namespace MpvPlayerUI
 {
     public partial class Form1 : Form
     {
-        private MpvFacade mpv;
+        private MpvFacade _mpv;
         public List<string> playlist = new List<string>();
-        private ISourceStrategy musicSource = new LocalMusicStrategy("..\\..\\..\\local\\");
+        private ISourceStrategy _musicSource = new LocalMusicStrategy("..\\..\\..\\local\\");
         public int currentIndex = 0;
         public int CurrentIndex() { return  currentIndex; }
         public List<string> Playlist() { return playlist; }
@@ -39,7 +39,7 @@ namespace MpvPlayerUI
             this.FormClosing += Form1_FormClosing;
 
             // Adaugare muzica din folderul "local" in interfata
-            foreach (var song in musicSource.LoadMusic())
+            foreach (var song in _musicSource.LoadMusic())
             {
                 addMusic(song);
             }
@@ -52,8 +52,8 @@ namespace MpvPlayerUI
             {
                 string dllPath = "mpv-1.dll";
                 // API de acces al functiilor MPV
-                mpv = new MpvFacade(dllPath);
-                mpv.Initialize();
+                _mpv = new MpvFacade(dllPath);
+                _mpv.Initialize();
                 // Timer-ul ce raspunde de actualizarea barei de timp a melodiei
                 timer.Start();
             }
@@ -71,20 +71,20 @@ namespace MpvPlayerUI
 
         private void btnPause_Click(object sender, EventArgs e)
         {
-            if (mpv == null || playlist.Count == 0)
+            if (_mpv == null || playlist.Count == 0)
             {
                 return;
             }
             try
             {
-                if (mpv.isPaused())
+                if (_mpv.isPaused())
                 {
-                    mpv.Resume();
+                    _mpv.Resume();
                     btnPause.Text = "Pause";
                 }
                 else
                 {
-                    mpv.Pause();
+                    _mpv.Pause();
                     btnPause.Text = "Play";
                 }
             }
@@ -122,7 +122,7 @@ namespace MpvPlayerUI
 
         private void comboSpeed_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (mpv == null)
+            if (_mpv == null)
             {
                 return;
             }
@@ -132,7 +132,7 @@ namespace MpvPlayerUI
                 string selected = comboSpeed.SelectedItem.ToString().Replace("x", "");
                 if (float.TryParse(selected, out float speed))
                 {
-                    mpv.SetSpeed(speed);
+                    _mpv.SetSpeed(speed);
                 }
             }
             catch (Exception ex)
@@ -155,7 +155,7 @@ namespace MpvPlayerUI
                     {
                         continue;
                     }
-                    bool success = musicSource.SaveMusic(ofd.FileNames[i]);
+                    bool success = _musicSource.SaveMusic(ofd.FileNames[i]);
                     if (success)
                     {
                         addMusic(ofd.FileNames[i]);
@@ -190,7 +190,7 @@ namespace MpvPlayerUI
         private void volumeTrackBar_Scroll(object sender, EventArgs e)
         {
             double volume = volumeTrackBar.Value;
-            mpv.SetVolume((int)volume * 10);
+            _mpv.SetVolume((int)volume * 10);
             volumeLabel.Text = $"Volum: {volume * 10}%";
         }
 
@@ -201,8 +201,8 @@ namespace MpvPlayerUI
         private void timer_Tick(object sender, EventArgs e)
         {
             string currentString, totalString;
-            int current = (int)mpv.GetTime();
-            int total = (int)mpv.GetDuration();
+            int current = (int)_mpv.GetTime();
+            int total = (int)_mpv.GetDuration();
 
             if (current >= 0 && total > 0)
             {
@@ -221,7 +221,7 @@ namespace MpvPlayerUI
 
         private void trackBarSong_Scroll(object sender, EventArgs e)
         {
-            mpv.SetTime(trackBarSong.Value);
+            _mpv.SetTime(trackBarSong.Value);
         }
 
         /**
@@ -229,7 +229,7 @@ namespace MpvPlayerUI
          */
         private void PlayCurrent()
         {
-            if (playlist.Count == 0 || mpv == null)
+            if (playlist.Count == 0 || _mpv == null)
             {
                 return;
             }
@@ -237,7 +237,7 @@ namespace MpvPlayerUI
             try
             {
                 string songPath = playlist[currentIndex];
-                mpv.Load(songPath, panel1.Handle);
+                _mpv.Load(songPath, panel1.Handle);
                 listBoxSongs.SelectedIndex = currentIndex;
             }
             catch (Exception ex)
@@ -248,7 +248,7 @@ namespace MpvPlayerUI
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            mpv?.Dispose();
+            _mpv?.Dispose();
         }
     }
 }

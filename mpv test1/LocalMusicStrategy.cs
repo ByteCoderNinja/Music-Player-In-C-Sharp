@@ -26,15 +26,15 @@ namespace MpvPlayerUI
 {
     class LocalMusicStrategy: ISourceStrategy
     {
-        private string source;
+        private string _source;
         public LocalMusicStrategy(string path)
         {
-            this.source = path;
+            this._source = path;
         }
         public List<string> LoadMusic()
         {
             List<string> musicFiles = new List<string>();
-            musicFiles = Directory.GetFiles(Path.GetFullPath(source)).ToList();
+            musicFiles = Directory.GetFiles(Path.GetFullPath(_source)).ToList();
             return musicFiles;
         }
 
@@ -42,7 +42,7 @@ namespace MpvPlayerUI
         {
             try
             {
-                File.Copy(musicPath, Path.Combine(Path.GetFullPath(source), Path.GetFileName(musicPath)));
+                File.Copy(musicPath, Path.Combine(Path.GetFullPath(_source), Path.GetFileName(musicPath)));
                 return true;
             } catch(IOException ex)
             {

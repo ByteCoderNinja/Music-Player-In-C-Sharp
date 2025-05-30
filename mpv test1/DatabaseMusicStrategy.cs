@@ -25,10 +25,10 @@ namespace mpv_test1
 {
     class DatabaseMusicStrategy : ISourceStrategy
     {
-        private string source;
+        private string _source;
         public DatabaseMusicStrategy(string path)
         {
-            this.source = path;
+            this._source = path;
         }
         public List<string> LoadMusic()
         {

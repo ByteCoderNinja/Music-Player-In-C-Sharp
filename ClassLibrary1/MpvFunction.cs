@@ -38,7 +38,7 @@ namespace MpvAPI
         public MpvSetPropertyString SetPropertyString { get; private set; }
         public MpvFree Free { get; private set; }
 
-        private IntPtr dllHandle;
+        private IntPtr _dllHandle;
 
         private bool disposed = false;
         public MpvFunction(string dllPath)
@@ -49,8 +49,8 @@ namespace MpvAPI
         private void LoadDll(string dllPath)
         {
             if (dllPath is null) throw new ArgumentException("Dll path is null");
-            dllHandle = WindowsImportedFunctions.LoadLibrary(dllPath);
-            if (dllHandle == IntPtr.Zero) throw new Exception("Failed to load dll.");
+            _dllHandle = WindowsImportedFunctions.LoadLibrary(dllPath);
+            if (_dllHandle == IntPtr.Zero) throw new Exception("Failed to load dll.");
         }
         private void LoadFunctions()
         {
@@ -69,7 +69,7 @@ namespace MpvAPI
         }
         private TDelegate LoadFunction<TDelegate>(string name) where TDelegate: class
         {
-            IntPtr address = WindowsImportedFunctions.GetProcAddress(dllHandle, name);
+            IntPtr address = WindowsImportedFunctions.GetProcAddress(_dllHandle, name);
             if (address != IntPtr.Zero)
                 return (TDelegate)(object)Marshal.GetDelegateForFunctionPointer(address, typeof(TDelegate));
             throw new Exception("Failed to load function: " + name);
@@ -84,7 +84,7 @@ namespace MpvAPI
             {
                 if (!disposed)
                 {
-                    WindowsImportedFunctions.FreeLibrary(dllHandle);
+                    WindowsImportedFunctions.FreeLibrary(_dllHandle);
                 }
                 disposed = true;
             }

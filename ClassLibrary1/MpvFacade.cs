@@ -29,11 +29,11 @@ namespace MpvAPI
          */
         public IMpvFunction Function
         {
-            get => function;
+            get => _function;
             set
             {
                 if(value is null) throw new ArgumentNullException("value is null");
-                function = value;
+                _function = value;
             }
         }
 
@@ -42,16 +42,16 @@ namespace MpvAPI
          */
         public IntPtr Handle
         {
-            get => handle;
+            get => _handle;
             private set
             {
-                if (value == IntPtr.Zero) throw new ArgumentException("Invalid handle", nameof(handle));
-                handle = value;
+                if (value == IntPtr.Zero) throw new ArgumentException("Invalid handle", nameof(_handle));
+                _handle = value;
             }
         }
-        private IMpvFunction function;
-        private IntPtr handle;
-        private bool disposed = false;
+        private IMpvFunction _function;
+        private IntPtr _handle;
+        private bool _disposed = false;
         public MpvFacade(string dllPath)
         {
             if (dllPath == null) throw new ArgumentNullException("Null dll path");
@@ -310,14 +310,14 @@ namespace MpvAPI
         }
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 Function.TerminateDestroy(Handle);
                 if (disposing && Function is IDisposable disposableFunctions)
                 {
                     disposableFunctions.Dispose();
                 }
-                disposed = true;
+                _disposed = true;
             }
         }
 
