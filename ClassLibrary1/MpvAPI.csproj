@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Declarations.cs" />
+    <Compile Include="DLLOpeningException.cs" />
     <Compile Include="Interfaces\IMPVEvents.cs" />
     <Compile Include="Interfaces\IMpvFunction.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />

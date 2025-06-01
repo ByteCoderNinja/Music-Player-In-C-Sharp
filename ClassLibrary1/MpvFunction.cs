@@ -48,9 +48,9 @@ namespace MpvAPI
         }
         private void LoadDll(string dllPath)
         {
-            if (dllPath is null) throw new ArgumentException("Dll path is null");
+            if (dllPath is null) throw new DLLOpeningException("Dll path is null");
             _dllHandle = WindowsImportedFunctions.LoadLibrary(dllPath);
-            if (_dllHandle == IntPtr.Zero) throw new Exception("Failed to load dll.");
+            if (_dllHandle == IntPtr.Zero) throw new DLLOpeningException("Failed to load dll.");
         }
         private void LoadFunctions()
         {

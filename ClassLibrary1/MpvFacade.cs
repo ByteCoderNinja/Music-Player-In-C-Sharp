@@ -54,8 +54,8 @@ namespace MpvAPI
         private bool _disposed = false;
         public MpvFacade(string dllPath)
         {
-            if (dllPath == null) throw new ArgumentNullException("Null dll path");
-            if (dllPath.Trim().Length == 0) throw new ArgumentException("Empty dll path");
+            if (dllPath == null) throw new DLLOpeningException("Null dll path");
+            if (dllPath.Trim().Length == 0) throw new DLLOpeningException("Empty dll path");
             Function = new MpvFunction(dllPath);
         }
 
